@@ -10,7 +10,9 @@ class EncryptTest extends \PHPUnit_Framework_TestCase
     // Original text and encrypted text should be different.
     public function testOriginalTextShouldNotMatchEncryptedText()
     {
-        $crypto = new Encrypt(new \Mknamdeo\MCrypt);
+        $crypto_factory = new \Mknamdeo\EncryptionFactory();
+        $crypto = $crypto_factory->createEncryptor('MCrypt');
+
         $decrypted_message = "This is a test string.";
         $encrypted_message = $crypto->encrypt($decrypted_message);
 
@@ -20,7 +22,9 @@ class EncryptTest extends \PHPUnit_Framework_TestCase
     // Original text and decrypted text should be same. Reversable.
     public function testOriginalTextShouldMatchDecryptedText()
     {
-        $crypto = new Encrypt(new \Mknamdeo\MCrypt);
+        $crypto_factory = new \Mknamdeo\EncryptionFactory();
+        $crypto = $crypto_factory->createEncryptor('MCrypt');
+
         $original_message = "This is a test string.";
         $encrypted_message = $crypto->encrypt($original_message);
         $decrypted_message = $crypto->decrypt($encrypted_message);
@@ -33,10 +37,13 @@ class EncryptTest extends \PHPUnit_Framework_TestCase
 
         $original_message = "This is a test string.";
 
-        $crypto_one = new Encrypt(new \Mknamdeo\MCrypt);
+        $crypto_factory = new \Mknamdeo\EncryptionFactory();
+        $crypto_one = $crypto_factory->createEncryptor('MCrypt');
+
         $crypto_one->setKey("1234567890abcdef");
 
-        $crypto_two = new Encrypt(new \Mknamdeo\MCrypt);
+        $crypto_two = $crypto_factory->createEncryptor('MCrypt');
+
         $crypto_two->setKey("abcdefghijklmnop");
 
         $this->assertNotEquals($crypto_one->encrypt($original_message),
@@ -49,10 +56,11 @@ class EncryptTest extends \PHPUnit_Framework_TestCase
 
         $original_message = "This is a test string.";
 
-        $crypto_one = new Encrypt(new \Mknamdeo\MCrypt);
+        $crypto_factory = new \Mknamdeo\EncryptionFactory();
+        $crypto_one = $crypto_factory->createEncryptor('MCrypt');
         $crypto_one->setKey("1234567890abcdef");
 
-        $crypto_two = new Encrypt(new \Mknamdeo\MCrypt);
+        $crypto_two = $crypto_factory->createEncryptor('MCrypt');
         $crypto_two->setKey("abcdefghijklmnop");
 
         $this->assertEquals(

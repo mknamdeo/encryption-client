@@ -4,13 +4,26 @@ namespace Mknamdeo;
 
 class MCrypt implements EncryptionInterface
 {
-    const iv = 'cg2x2hlisu9ol6f3';
-    public $key = "wss92am4877nwnxb";
-    public $isBinary = false;
+    protected $iv = 'cg2x2hlisu9ol6f3';
+    protected $key = "wss92am4877nwnxb";
+    protected $isBinary = false;
+
+    public function __construct($iv = null, $key = null, $isBinary = null)
+    {
+        if (!empty($iv)) {
+            $this->iv = $iv;
+        }
+        if (!empty($key)) {
+            $this->key = $key;
+        }
+        if (!empty($isBinary)) {
+            $this->isBinary = $isBinary;
+        }
+    }
 
     public function encrypt($decryptedMessage)
     {
-        $iv = self::iv;
+        $iv = $this->iv;
         $str = $this->isBinary ? $decryptedMessage : utf8_decode($decryptedMessage);
         $td = mcrypt_module_open('rijndael-128', ' ', 'cbc', $iv);
         mcrypt_generic_init($td, $this->key, $iv);
@@ -23,7 +36,7 @@ class MCrypt implements EncryptionInterface
     public function decrypt($encryptedMessage)
     {
         $encryptedMessage = $this->isBinary ? $encryptedMessage : self::hex2bin($encryptedMessage);
-        $iv = self::iv;
+        $iv = $this->iv;
         $td = mcrypt_module_open('rijndael-128', ' ', 'cbc', $iv);
         mcrypt_generic_init($td, $this->key, $iv);
         $decrypted = mdecrypt_generic($td, $encryptedMessage);
@@ -41,5 +54,19 @@ class MCrypt implements EncryptionInterface
         return $bindata;
     }
 
+    public function setIv($iv)
+    {
+        $this->iv = $iv;
+    }
+
+    public function setIsBinary($isBinary)
+    {
+        $this->isBinary = $isBinary;
+    }
+
+    public function setKey($key)
+    {
+        $this->key = $key;
+    }
 }
 

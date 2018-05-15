@@ -4,7 +4,10 @@ require 'vendor/autoload.php';
 
 use Mknamdeo\Encrypt;
 
-$crypto = new Encrypt(new Mknamdeo\MCrypt);
+$crypto_factory = new \Mknamdeo\EncryptionFactory();
+
+$crypto = $crypto_factory->createEncryptor('MCrypt');
+
 $encrypted_message = $crypto->encrypt("Manish");
 
 print "<br/>Encrypted Message " . $encrypted_message;
