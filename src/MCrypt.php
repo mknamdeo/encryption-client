@@ -2,14 +2,7 @@
 
 namespace Mknamdeo;
 
-interface Encryption
-{
-    public function encrypt($message);
-
-    public function decrypt($message);
-}
-
-class MCrypt implements Encryption
+class MCrypt implements EncryptionInterface
 {
     const iv = 'cg2x2hlisu9ol6f3';
     public $key = "wss92am4877nwnxb";

@@ -2,13 +2,13 @@
 
 namespace Mknamdeo;
 
-use Mknamdeo\Encryption;
+use Mknamdeo\EncryptionInterface;
 
 class Encrypt
 {
     protected $encryptor;
 
-    public function __construct(Encryption $encryptor)
+    public function __construct(EncryptionInterface $encryptor)
     {
         $this->encryptor = $encryptor;
     }
